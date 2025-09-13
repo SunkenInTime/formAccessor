@@ -1,0 +1,107 @@
+{
+  "fields": [
+    {
+      "label": "Full Name - First Name",
+      "section": "Full Name",
+      "type": "text",
+      "required": true,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Full Name - Middle Name",
+      "section": "Full Name",
+      "type": "text",
+      "required": false,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Full Name - Last Name",
+      "section": "Full Name",
+      "type": "text",
+      "required": true,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Birth Date - Month",
+      "section": "Birth Date",
+      "type": "select",
+      "required": true,
+      "options": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Birth Date - Day",
+      "section": "Birth Date",
+      "type": "number",
+      "required": true,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Birth Date - Year",
+      "section": "Birth Date",
+      "type": "number",
+      "required": true,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Current Address - Street Address",
+      "section": "Current Address",
+      "type": "text",
+      "required": true,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Current Address - Street Address Line 2",
+      "section": "Current Address",
+      "type": "text",
+      "required": false,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Current Address - City",
+      "section": "Current Address",
+      "type": "text",
+      "required": true,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    },
+    {
+      "label": "Current Address - State / Province",
+      "section": "Current Address",
+      "type": "text",
+      "required": true,
+      "options": null,
+      "accessibility": "editable",
+      "value": ""
+    }
+  ]
+}

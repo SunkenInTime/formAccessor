@@ -2,59 +2,123 @@
     "fields": [
         {
             "label": "Full Name",
+            "section": "Personal Information",
             "type": "text",
             "required": true,
-            "value": "",
-            "accessibility": "Enter your full legal name"
+            "options": [],
+            "accessibility": "public",
+            "value": ""
         },
         {
-            "label": "Email Address",
-            "type": "email",
+            "label": "First Name",
+            "section": "Personal Information",
+            "type": "text",
             "required": true,
-            "value": "",
-            "accessibility": "Enter your email address"
+            "options": [],
+            "accessibility": "public",
+            "value": ""
         },
         {
-            "label": "Phone Number",
-            "type": "phone",
+            "label": "Middle Name",
+            "section": "Personal Information",
+            "type": "text",
+            "required": false,
+            "options": [],
+            "accessibility": "public",
+            "value": ""
+        },
+        {
+            "label": "Last Name",
+            "section": "Personal Information",
+            "type": "text",
             "required": true,
-            "value": "",
-            "accessibility": "Enter your phone number"
+            "options": [],
+            "accessibility": "public",
+            "value": ""
         },
         {
-            "label": "Date of Birth",
+            "label": "Birth Date",
+            "section": "Personal Information",
             "type": "date",
             "required": true,
-            "value": "",
-            "accessibility": "Enter your date of birth"
+            "options": {
+                "Month": {
+                    "type": "select",
+                    "options": [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
+                    ]
+                },
+                "Day": {
+                    "type": "number",
+                    "min": 1,
+                    "max": 31
+                },
+                "Year": {
+                    "type": "number"
+                }
+            },
+            "accessibility": "public",
+            "value": {
+                "Month": "",
+                "Day": "",
+                "Year": ""
+            }
         },
         {
-            "label": "Address",
+            "label": "Current Address",
+            "section": "Contact Information",
             "type": "text",
             "required": true,
-            "value": "",
-            "accessibility": "Enter your street address"
+            "options": [],
+            "accessibility": "public",
+            "value": ""
+        },
+        {
+            "label": "Street Address",
+            "section": "Contact Information",
+            "type": "text",
+            "required": true,
+            "options": [],
+            "accessibility": "public",
+            "value": ""
+        },
+        {
+            "label": "Street Address Line 2",
+            "section": "Contact Information",
+            "type": "text",
+            "required": false,
+            "options": [],
+            "accessibility": "public",
+            "value": ""
         },
         {
             "label": "City",
+            "section": "Contact Information",
             "type": "text",
             "required": true,
-            "value": "",
-            "accessibility": "Enter your city"
+            "options": [],
+            "accessibility": "public",
+            "value": ""
         },
         {
-            "label": "State",
+            "label": "State / Province",
+            "section": "Contact Information",
             "type": "text",
             "required": true,
-            "value": "",
-            "accessibility": "Enter your state or province"
-        },
-        {
-            "label": "ZIP Code",
-            "type": "text",
-            "required": true,
-            "value": "",
-            "accessibility": "Enter your ZIP or postal code"
+            "options": [],
+            "accessibility": "public",
+            "value": ""
         }
     ]
 }

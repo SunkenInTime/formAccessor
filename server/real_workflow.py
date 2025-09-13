@@ -2,7 +2,7 @@ import os
 import json
 import time
 import threading
-from practice import extract_and_generate_schema
+from schema_gen import extract_and_generate_schema
 from image_generator import FormImageGenerator
 from enhanced_coordinate_extractor import CoordinateExtractor
 from openai import OpenAI
@@ -114,6 +114,8 @@ class SpeechFormFiller:
     
     def validate_response(self, response, field_type):
         """Basic validation for different field types"""
+        if "skip" in response.lower():
+            return True
         if field_type == "email":
             return "@" in response and "." in response
         elif field_type == "phone":
@@ -157,12 +159,13 @@ def real_form_workflow(input_image_path: str, output_image_path: str = None, use
     if use_speech and speech_filler:
         speech_filler.speak("I'm analyzing your form. Please wait a moment.")
     
-    schema_file = os.path.join(os.path.dirname(__file__), "test_schema.json")
-    if os.path.exists(schema_file):
-        print(f"🔄 Using existing schema from: {schema_file}")
-        with open(schema_file, "r") as f:
-            schema = json.load(f)
-    # schema = extract_and_generate_schema(input_image_path)
+    # schema_file = os.path.join(os.path.dirname(__file__), "test_schema.json")
+    # if os.path.exists(schema_file):
+    #     print(f"🔄 Using existing schema from: {schema_file}")
+    #     with open(schema_file, "r") as f:
+    #         schema = json.load(f)
+
+    schema = extract_and_generate_schema(input_image_path)
     
     if not schema:
         error_msg = "❌ Could not extract schema. Please check the previous output for errors."
@@ -171,7 +174,11 @@ def real_form_workflow(input_image_path: str, output_image_path: str = None, use
             speech_filler.speak("Sorry, I couldn't analyze the form. Please check the image and try again.")
         return None
     
-    print("✅ Schema extracted successfully!")
+    # Save the extracted schema for inspection
+    extracted_schema_path = "extracted_schema.json"
+    with open(extracted_schema_path, 'w') as f:
+        json.dump(schema, f, indent=2)
+    print(f"✅ Schema extracted successfully and saved to: {extracted_schema_path}")
     
     # Step 2: Check for existing manual coordinates or extract new ones
     print("\n📐 Step 2: Checking for field coordinates...")
@@ -243,7 +250,7 @@ def real_form_workflow(input_image_path: str, output_image_path: str = None, use
                     model='gpt-4-1106-preview',
                     messages=[{
                         'role': 'system',
-                        'content': "You are a helpful assistant guiding a user through filling out a digital form. Ask one required field at a time in a conversational way. Keep questions short and clear."
+                        'content': "You are a helpful assistant guiding a user through filling out a digital form. Ask one required field at a time in a conversational way. Keep questions short and clear. If a user says skip, put an empty character in the value."
                     }, {
                         'role': 'user',
                         'content': field_prompt
@@ -260,9 +267,14 @@ def real_form_workflow(input_image_path: str, output_image_path: str = None, use
                 user_input = speech_filler.get_user_input_speech(full_question, field.get('type', 'text'))
                 
                 if user_input:
-                    field['value'] = user_input
-                    # Confirm the input
-                    speech_filler.speak(f"Got it! {field.get('label')}: {user_input}")
+                    # Check if user wants to skip
+                    if user_input.lower().strip() in ['skip', 'skip this', 'skip field', 'next', 'pass']:
+                        speech_filler.speak("Skipping this field. Moving to the next one.")
+                        print(f"⏭️  Skipped: {field.get('label')}")
+                    else:
+                        field['value'] = user_input
+                        # Confirm the input
+                        speech_filler.speak(f"Got it! {field.get('label')}: {user_input}")
                 else:
                     speech_filler.speak("Skipping this field. Let's continue.")
                     
@@ -273,8 +285,11 @@ def real_form_workflow(input_image_path: str, output_image_path: str = None, use
                 field['value'] = user_input
         else:
             # Use text input (original behavior)
-            user_input = input(f"Enter value for '{field.get('label', '')}': ")
-            field['value'] = user_input
+            user_input = input(f"Enter value for '{field.get('label', '')}' (or type 'skip' to skip): ")
+            if user_input.lower().strip() in ['skip', 'skip this', 'skip field', 'next', 'pass']:
+                print(f"⏭️  Skipped: {field.get('label')}")
+            else:
+                field['value'] = user_input
     
     print("\n✅ All required fields filled!")
     

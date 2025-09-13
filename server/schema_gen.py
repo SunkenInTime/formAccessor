@@ -59,7 +59,7 @@ def extract_and_generate_schema(file_path):
     ]
 
     response = Client.chat.completions.create(
-        model='gpt-4-1106-preview',
+        model='gpt-4.1-mini-2025-04-14',
         messages=messages,
         max_tokens=2048,
         temperature=0
